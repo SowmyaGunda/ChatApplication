@@ -3,7 +3,6 @@ package com.example.chatapplication.view
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -33,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var repository: ChatRepository
     private lateinit var toolbar: Toolbar
     private lateinit var btnBack: ImageButton
+    private var isSendClicked: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,10 @@ class MainActivity : AppCompatActivity() {
     private fun getPreviousChatHistory(){
         viewModel.getAllMessages(repository).observe(this, Observer {
             if(it != null) {
-                chatAdapter.addChatHistory(it)
+                runOnUiThread {
+                    chatAdapter.addChatHistory(it)
+                    chatList.scrollToPosition(it.size)
+                }
             }
         })
     }
@@ -79,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSendClicked(msg: String, view: View) {
+        isSendClicked = true;
         if (msg.isNotEmpty()) {
             viewModel.sendMessage(repository,MessageItem(msg, MessageItem.TYPE_MY_MESSAGE, System.currentTimeMillis(),true))
             message.text.clear()
