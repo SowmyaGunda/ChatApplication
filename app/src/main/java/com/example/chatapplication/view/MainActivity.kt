@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         initView()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        chatAdapter.data = viewModel.messages
         repository = ChatRepository(this)
         getPreviousChatHistory()
     }
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
             if(it != null) {
                 runOnUiThread {
                     chatAdapter.addChatHistory(it)
-                    chatList.scrollToPosition(it.size)
+                    chatList.scrollToPosition(chatAdapter.itemCount -1)
                 }
             }
         })
