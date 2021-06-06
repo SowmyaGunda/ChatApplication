@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         val random_replies = resources.getStringArray(R.array.random_replies)
         val rand = Random()
         val n: Int = rand.nextInt(random_replies.size - 1)
-        Log.v("Sowmya","random message " + random_replies[n])
         return MessageItem(random_replies[n],MessageItem.TYPE_FRIEND_MESSAGE,System.currentTimeMillis(),true)
     }
 

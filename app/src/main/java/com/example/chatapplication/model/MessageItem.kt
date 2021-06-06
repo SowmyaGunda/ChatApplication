@@ -9,6 +9,7 @@ class MessageItem(val content:String, val messageType:Int, val timestamp: Long, 
     companion object {
         const val TYPE_MY_MESSAGE = 0
         const val TYPE_FRIEND_MESSAGE = 1
+        const val TYPE_HEADER = 2
     }
     @PrimaryKey(autoGenerate = true)
     var id :Int? = null
