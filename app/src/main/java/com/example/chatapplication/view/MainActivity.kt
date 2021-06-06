@@ -1,34 +1,45 @@
-package com.example.chatapplication
+package com.example.chatapplication.view
 
 import android.app.Activity
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.chatapplication.R
 import com.example.chatapplication.database.ChatRepository
 import com.example.chatapplication.model.MessageItem
-import com.example.chatapplication.ui.adapter.ChatAdapter
-import com.example.chatapplication.ui.main.MainViewModel
+import com.example.chatapplication.viewmodel.MainViewModel
+import kotlinx.android.synthetic.main.main_activity.*
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-    private var chatAdapter = ChatAdapter(mutableListOf())
+    private var chatAdapter =
+        ChatAdapter(mutableListOf())
     private lateinit var chatList: RecyclerView
     private lateinit var btnSend: ImageButton
     private lateinit var message: EditText
     private lateinit var repository: ChatRepository
+    private lateinit var toolbar: Toolbar
+    private lateinit var btnBack: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
+        toolbar = findViewById(R.id.toolbar)
+        toolbar.setTitle("")
+        setSupportActionBar(toolbar)
         initView()
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         chatAdapter.data = viewModel.messages
@@ -46,6 +57,10 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initView() {
+        btnBack = findViewById(R.id.back_button)
+        back_button.setOnClickListener{
+            onBackPressed()
+        }
         chatList = findViewById(R.id.messageList)
         chatList.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -69,12 +84,21 @@ class MainActivity : AppCompatActivity() {
             message.text.clear()
         }
         hideKeyboardFrom(this, view)
+        viewModel.sendMessage(repository,getRandomReply())
     }
 
     private fun hideKeyboardFrom(context: Context?, view: View) {
         val imm: InputMethodManager =
                 context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    private fun getRandomReply() : MessageItem{
+        val random_replies = resources.getStringArray(R.array.random_replies)
+        val rand = Random()
+        val n: Int = rand.nextInt(random_replies.size - 1)
+        Log.v("Sowmya","random message " + random_replies[n])
+        return MessageItem(random_replies[n],MessageItem.TYPE_FRIEND_MESSAGE,System.currentTimeMillis(),true)
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.chatapplication.ui.adapter
+package com.example.chatapplication.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,11 +18,15 @@ class ChatAdapter(var data: List<MessageItem>) : RecyclerView.Adapter<MessageVie
         return when (viewType) {
             TYPE_MY_MESSAGE -> {
                 val view = LayoutInflater.from(context).inflate(R.layout.my_message_item, parent, false)
-                MyMessageViewHolder(view)
+                MyMessageViewHolder(
+                    view
+                )
             }
             TYPE_FRIEND_MESSAGE -> {
                 val view = LayoutInflater.from(parent.context).inflate(R.layout.friend_message_item, parent, false)
-                FriendMessageViewHolder(view)
+                FriendMessageViewHolder(
+                    view
+                )
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }

@@ -1,4 +1,4 @@
-package com.example.chatapplication.ui.adapter
+package com.example.chatapplication.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

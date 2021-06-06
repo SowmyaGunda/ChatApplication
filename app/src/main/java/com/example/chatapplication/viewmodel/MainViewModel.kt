@@ -1,4 +1,4 @@
-package com.example.chatapplication.ui.main
+package com.example.chatapplication.viewmodel
 
 
 import androidx.lifecycle.ViewModel
