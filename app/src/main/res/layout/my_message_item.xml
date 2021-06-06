@@ -16,8 +16,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textSize="15sp"
-        android:padding="15dp"
+        android:padding="10dp"
+        android:drawablePadding="5dp"
         android:background="@drawable/my_bubble_shape"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:drawableEndCompat="@drawable/outline_done_all_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>
