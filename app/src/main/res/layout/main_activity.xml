@@ -40,6 +40,14 @@
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:text="@string/sarah"/>
+            <Button
+                android:id="@+id/reply_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reply"
+                android:layout_gravity="end"
+                android:backgroundTint="#bd2651"
+                android:layout_marginStart="10dp"/>
 
             <ImageButton
                 android:layout_width="wrap_content"

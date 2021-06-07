@@ -2,6 +2,7 @@
     <string name="app_name">Chat Application</string>
     <string name="sarah">Sarah</string>
     <string name="enter_message">Enter message</string>
+    <string name="reply">Reply</string>
     <string-array name="random_replies">
         <item>how are you</item>
         <item>whats up</item>

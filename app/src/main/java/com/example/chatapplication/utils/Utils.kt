@@ -10,6 +10,8 @@ class Utils {
 
         fun getTimeStampString(): String = convertDate(headerTime, "EEEE hh:mm")
 
+        fun isMsgReceivedOrSent20SecOlder(time: Long) = (System.currentTimeMillis() - time) <= (20*1000)
+
         private fun convertDate(dateInMilliseconds: Long, dateFormat: String): String =
             DateFormat.format(dateFormat, dateInMilliseconds).toString()
     }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
     private var chatAdapter =
-        ChatAdapter(mutableListOf())
+        ChatAdapter(this,mutableListOf())
     private lateinit var chatList: RecyclerView
     private lateinit var btnSend: ImageButton
     private lateinit var message: EditText
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var btnBack: ImageButton
     private var isSendClicked: Boolean = false
+    private lateinit var replyButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +80,10 @@ class MainActivity : AppCompatActivity() {
         btnSend.setOnClickListener {
             onSendClicked(message.text.toString(),it)
         }
+        replyButton = findViewById(R.id.reply_button)
+        replyButton.setOnClickListener {
+            viewModel.sendMessage(repository,getRandomReply())
+        }
     }
 
     private fun onSendClicked(msg: String, view: View) {
@@ -87,7 +93,6 @@ class MainActivity : AppCompatActivity() {
             message.text.clear()
         }
         hideKeyboardFrom(this, view)
-        viewModel.sendMessage(repository,getRandomReply())
     }
 
     private fun hideKeyboardFrom(context: Context?, view: View) {
