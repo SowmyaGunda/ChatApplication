@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapplication.R
 import com.example.chatapplication.model.MessageItem
@@ -14,7 +15,7 @@ import com.example.chatapplication.model.MessageItem.Companion.TYPE_MY_MESSAGE
 import com.example.chatapplication.utils.Utils
 
 class ChatAdapter(var context: Context, var data: MutableList<MessageItem>) :
-    RecyclerView.Adapter<MessageViewHolder<*>>() {
+        RecyclerView.Adapter<MessageViewHolder<*>>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder<*> {
@@ -22,23 +23,23 @@ class ChatAdapter(var context: Context, var data: MutableList<MessageItem>) :
         return when (viewType) {
             TYPE_MY_MESSAGE -> {
                 val view =
-                    LayoutInflater.from(context).inflate(R.layout.my_message_item, parent, false)
+                        LayoutInflater.from(context).inflate(R.layout.my_message_item, parent, false)
                 MyMessageViewHolder(
-                    view
+                        view
                 )
             }
             TYPE_FRIEND_MESSAGE -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.friend_message_item, parent, false)
+                        .inflate(R.layout.friend_message_item, parent, false)
                 FriendMessageViewHolder(
-                    view
+                        view
                 )
             }
             TYPE_HEADER -> {
                 val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.time_stamp_item, parent, false)
+                        .inflate(R.layout.time_stamp_item, parent, false)
                 HeaderViewHolder(
-                    view
+                        view
                 )
             }
             else -> throw IllegalArgumentException("Invalid view type")
@@ -65,8 +66,8 @@ class ChatAdapter(var context: Context, var data: MutableList<MessageItem>) :
         for (item in data) {
             if (Utils.isMessageReceivedInLastHour(item.timestamp)) {
                 data.add(
-                    data.indexOf(item),
-                    MessageItem(Utils.getTimeStampString(), TYPE_HEADER, 0, false)
+                        data.indexOf(item),
+                        MessageItem(Utils.getTimeStampString(), TYPE_HEADER, 0, false)
                 )
                 break
             }
@@ -78,31 +79,30 @@ class ChatAdapter(var context: Context, var data: MutableList<MessageItem>) :
     override fun getItemViewType(position: Int): Int = data[position].messageType
 
     class MyMessageViewHolder(view: View) : MessageViewHolder<MessageItem>(view) {
-        private val messageContent = view.findViewById<TextView>(R.id.message)
+        val messageContent: TextView = view.findViewById(R.id.message)
 
         override fun bind(context: Context, item: MessageItem, isLatestMessage: Boolean) {
             messageContent.text = item.content
             if (isLatestMessage || Utils.isMsgReceivedOrSent20SecOlder(item.timestamp)) {
-                messageContent.background =
-                    context.getDrawable(R.drawable.outgoing_msg_bubble_with_tail)
+                messageContent.background = AppCompatResources.getDrawable(context, R.drawable.outgoing_msg_bubble_with_tail)
             } else {
                 messageContent.background =
-                    context.getDrawable(R.drawable.outgoing_msg_bubble)
+                        AppCompatResources.getDrawable(context, R.drawable.outgoing_msg_bubble)
             }
         }
     }
 
     class FriendMessageViewHolder(view: View) : MessageViewHolder<MessageItem>(view) {
-        private val messageContent = view.findViewById<TextView>(R.id.message)
+        private val messageContent: TextView = view.findViewById(R.id.message)
 
         override fun bind(context: Context, item: MessageItem, isLatestMessage: Boolean) {
             messageContent.text = item.content
             if (isLatestMessage || Utils.isMsgReceivedOrSent20SecOlder(item.timestamp)) {
                 messageContent.background =
-                    context.getDrawable(R.drawable.incoming_msg_bubble_with_tail)
+                        AppCompatResources.getDrawable(context, R.drawable.incoming_msg_bubble_with_tail)
             } else {
                 messageContent.background =
-                    context.getDrawable(R.drawable.incoming_msg_bubble)
+                        AppCompatResources.getDrawable(context, R.drawable.incoming_msg_bubble)
             }
         }
 

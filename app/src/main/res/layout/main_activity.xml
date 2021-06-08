@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_chevron_left_white_48dp"
                 app:tint="#bd2651"
+                android:layout_marginStart="-10dp"
                 android:background="@color/white"
                 android:layout_gravity="start" />
             <ImageView
@@ -45,6 +46,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reply"
+                android:textColor="@color/white"
+                android:layout_marginEnd="10dp"
                 android:layout_gravity="end"
                 android:backgroundTint="#bd2651"
                 android:layout_marginStart="10dp"/>
